@@ -1,0 +1,24 @@
+/* src/components/Footer/Footer.module.css */
+.footer {
+  background-color: var(--dark-secondary, #0e131a);
+  padding: 4rem 0 2rem;
+  border-top: 1px solid var(--glass-border, rgba(82, 155, 255, 0.15));
+  margin-top: auto; /* Try to push footer down */
+}
+
+.container {
+  /* Specific container styles for footer if needed */
+}
+
+.footerBottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--glass-border);
+  margin-top: 3rem;
+}
+
+.copyright {
+  font-size: 1.4rem;
+  color: var(--text-secondary, #94a3b8);
+  opacity: 0.7;
+}

@@ -1,0 +1,120 @@
+/* src/components/ContactSection/ContactSection.module.css (Enhanced Styling) */
+
+.contactSection {
+  padding: var(--section-padding-y) 0;
+  background-color: var(--dark-primary);
+  border-top: 1px solid var(--glass-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.contactSection::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; opacity: 0.05; /* Slightly more visible */
+  background-image: repeating-linear-gradient(-45deg,
+      rgba(var(--accent-blue-rgb), 0.6) 0, rgba(var(--accent-blue-rgb), 0.6) 1px, /* Slightly stronger lines */
+      transparent 1px, transparent 35px /* Slightly larger pattern */
+    );
+  pointer-events: none;
+}
+
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Inherits global .section-header */
+
+.contentWrapper {
+  display: grid;
+  gap: var(--space-xxl);
+  margin-top: var(--space-xxl);
+
+  @media (min-width: 992px) {
+    /* Adjust column ratio if needed, let's make info slightly smaller */
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    align-items: flex-start;
+  }
+}
+
+/* Styling for the Contact Info Block */
+.contactInfo {
+  text-align: left;
+  background-color: rgba(var(--dark-secondary-rgb, 14, 19, 26), 0.4); /* Subtle background */
+  padding: var(--space-xl);
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  height: 100%; /* Try to match form height */
+}
+
+.contactInfo h3 {
+  font-size: 2.4rem;
+  color: var(--heading-color);
+  margin-bottom: var(--space-lg);
+  font-family: var(--heading-font);
+  border-bottom: 2px solid var(--accent-blue); /* Underline heading */
+  padding-bottom: var(--space-sm);
+  display: inline-block; /* Make underline fit content */
+}
+
+.contactInfo p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+  line-height: 1.8;
+  font-size: 1.6rem; /* Slightly smaller info text */
+}
+
+.contactInfo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contactInfo li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  color: var(--text-secondary);
+  font-size: 1.6rem;
+}
+
+.contactInfo .iconWrapper {
+  flex-shrink: 0;
+  color: var(--accent-blue);
+  background-color: rgba(var(--accent-blue-rgb), 0.1); /* Subtle background for icon */
+  border-radius: 50%;
+  padding: var(--space-sm); /* Padding around icon */
+  width: 40px; /* Container size */
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contactInfo .iconWrapper svg {
+  width: 20px; /* Actual SVG size */
+  height: 20px;
+}
+
+.contactInfo a {
+  color: var(--text-primary);
+  word-break: break-word;
+  border-bottom: 1px dashed var(--glass-border); /* Subtle underline for links */
+  transition: var(--transition-fast);
+}
+.contactInfo a:hover {
+  color: var(--accent-glow);
+  border-bottom-color: var(--accent-glow);
+}
+
+
+/* Form Container - can remain simple if ContactForm handles its own styling */
+.formContainer {
+  /* Maybe add margin-top on mobile if contactInfo block adds too much height */
+   @media (max-width: 991px) {
+     margin-top: var(--space-xl);
+   }
+}
+
+/* Removed h3 styling from here - it should be handled by ContactForm if needed,
+   or added back to ContactSection.jsx if preferred outside the form component */

@@ -1,0 +1,128 @@
+// src/utils/helpers.js
+
+/**
+ * Παίρνει την τιμή μιας CSS μεταβλητής από το :root.
+ * @param {string} varName - Το όνομα της μεταβλητής (π.χ., '--accent-blue').
+ * @param {string} fallback - Μια προεπιλεγμένη τιμή αν η μεταβλητή δεν βρεθεί.
+ * @returns {string} Η τιμή της μεταβλητής ή η fallback τιμή.
+ */
+export function getCssVariable(varName, fallback) {
+    if (typeof window === 'undefined') return fallback;
+    try {
+         const value = getComputedStyle(document.documentElement).getPropertyValue(varName)?.trim();
+         return value || fallback;
+    } catch (e) {
+        console.error("Could not get CSS variable", e);
+        return fallback;
+    }
+}
+
+/**
+ * Μετατρέπει ένα HEX χρώμα σε RGBA.
+ * @param {string} hex - Το χρώμα σε μορφή HEX (π.χ., '#ff0000').
+ * @param {number} alpha - Η τιμή alpha (0 έως 1).
+ * @returns {string} Το χρώμα σε μορφή rgba().
+ */
+export function hexToRgba(hex, alpha) {
+    if (!hex) hex = '#6fa8ff'; // Fallback
+    hex = hex.replace('#', '');
+    try {
+        const r = parseInt(hex.length === 3 ? hex.slice(0, 1).repeat(2) : hex.slice(0, 2), 16);
+        const g = parseInt(hex.length === 3 ? hex.slice(1, 2).repeat(2) : hex.slice(2, 4), 16);
+        const b = parseInt(hex.length === 3 ? hex.slice(2, 3).repeat(2) : hex.slice(4, 6), 16);
+        if (isNaN(r) || isNaN(g) || isNaN(b)) throw new Error("Invalid HEX");
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    } catch (e) {
+         console.error("Error converting hex to rgba:", hex, e);
+         return `rgba(111, 168, 255, ${alpha})`; // Fallback color
+    }
+}
+
+/**
+ * Κάνει fetch δεδομένα από ένα API με βασικό error handling.
+ * @param {string} url - Η διεύθυνση URL του API.
+ * @param {object} options - Επιλογές για το fetch (method, headers, body).
+ * @param {string} context - Περιγραφή για τα logs σφαλμάτων.
+ * @returns {Promise<object|null>} Το JSON object ή null σε περίπτωση σφάλματος.
+ */
+export async function fetchData(url, options = {}, context = 'data') {
+    try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+             let errorBody = `HTTP error! status: ${response.status}`;
+             try {
+                 const textResponse = await response.text();
+                 console.error(`Non-OK response body for ${context}:`, textResponse.substring(0, 500)); // Limit log length
+                 if (textResponse.trim().toLowerCase().startsWith("<!doctype html")) {
+                     errorBody = `Received HTML instead of JSON (check backend logs/security?). Status: ${response.status}`;
+                 } else {
+                     try { const jsonError = JSON.parse(textResponse); errorBody = jsonError.message || JSON.stringify(jsonError); }
+                     catch { errorBody = textResponse.substring(0, 200); }
+                 }
+             } catch (readError) { /* ignore */ }
+             throw new Error(errorBody);
+        }
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+            return await response.json();
+        } else {
+            console.warn(`Received non-JSON response from ${context} endpoint: ${url}`);
+            return null;
+        }
+    } catch (error) {
+        console.error(`API Error (${context}):`, error.message); // Log only message
+        throw error; // Ρίξε το σφάλμα ξανά για να το πιάσει το component
+    }
+}
+
+/**
+ * Μετατρέπει συντεταγμένες Lat/Lng σε Vector3 για το Three.js.
+ * @param {number} lat - Latitude.
+ * @param {number} lng - Longitude.
+ * @param {number} radius - Η ακτίνα της σφαίρας.
+ * @returns {THREE.Vector3} Το αντικείμενο Vector3.
+ */
+export function latLngToVector3(lat, lng, radius) {
+    // Προϋποθέτει ότι το THREE είναι διαθέσιμο (θα γίνει import στο globe.js)
+    if (typeof THREE === 'undefined') return null;
+    const phi = (90 - lat) * (Math.PI / 180);
+    const theta = (lng + 180) * (Math.PI / 180);
+    const x = -radius * Math.sin(phi) * Math.cos(theta);
+    const y = radius * Math.cos(phi);
+    const z = radius * Math.sin(phi) * Math.sin(theta);
+    return new THREE.Vector3(x, y, z);
+}
+
+/**
+ * Επιστρέφει ένα χρώμα HEX βάσει του severity (1-10).
+ * @param {number} severity - Το επίπεδο σοβαρότητας.
+ * @returns {number} Το χρώμα σε μορφή HEX number (π.χ., 0xff0000).
+ */
+export function getThreatColor(severity) {
+    // Προϋποθέτει ότι το THREE είναι διαθέσιμο
+    if (typeof THREE === 'undefined') return 0xff0000; // Default red
+    severity = Math.max(1, Math.min(10, severity || 5));
+    const hue = 0.33 - (severity / 10) * 0.33; // Green to Red
+    return new THREE.Color().setHSL(hue, 0.9, 0.6).getHex();
+}
+
+/**
+ * Δημιουργεί ένα ShaderMaterial για το εφέ glow.
+ * @param {THREE.Color} color - Το βασικό χρώμα του glow.
+ * @param {number} coefficient - Συντελεστής Fresnel.
+ * @param {number} power - Δύναμη Fresnel.
+ * @returns {THREE.ShaderMaterial} Το υλικό shader.
+ */
+export function createGlowMaterial(color, coefficient = 0.7, power = 4.5) {
+    // Προϋποθέτει ότι το THREE είναι διαθέσιμο
+    if (typeof THREE === 'undefined') return null;
+    const vertexShader = `varying vec3 vNormal; void main() { vNormal = normalize(normalMatrix * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`;
+    const fragmentShader = `varying vec3 vNormal; uniform float c; uniform float p; uniform vec3 glowColor; void main() { float intensity = pow(c - dot(vNormal, vec3(0.0, 0.0, 1.0)), p); gl_FragColor = vec4(glowColor, 1.0) * intensity * 1.3; }`;
+   return new THREE.ShaderMaterial({
+       uniforms: {
+           c: { value: coefficient }, p: { value: power }, glowColor: { value: color } // Το color πρέπει να είναι THREE.Color
+       },
+       vertexShader, fragmentShader, side: THREE.BackSide,
+       blending: THREE.AdditiveBlending, transparent: true, depthWrite: false
+   });
+}

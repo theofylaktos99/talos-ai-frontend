@@ -1,0 +1,19 @@
+/* src/components/ParticlesBackground/ParticlesBackground.module.css */
+.particleContainer {
+  position: fixed; /* Ή absolute, ανάλογα με το πού το βάζεις */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Πίσω από όλο το περιεχόμενο */
+  pointer-events: none; /* Να μην πιάνει κλικ */
+  opacity: 0.5; /* Προσαρμογή αδιαφάνειας */
+  /* background-color: var(--dark-primary); */ /* Προαιρετικό background */
+}
+
+/* Σιγουρέψου ότι το canvas που δημιουργείται παίρνει όλο τον χώρο */
+.particleContainer > canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,124 @@
+/* src/components/AboutSection/AboutSection.module.css (Enhanced Cyberpunk Style) */
+
+.aboutSection {
+  padding: var(--section-padding-y) 0;
+  /* Removed background-color and border-top from section itself */
+  position: relative;
+  overflow: hidden; /* Hide potential blur overflow */
+}
+
+/* Optional: Add a subtle background pattern to the section */
+.aboutSection::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; opacity: 0.05;
+  background-image: repeating-linear-gradient(45deg,
+      rgba(var(--accent-blue-rgb), 0.5) 0, rgba(var(--accent-blue-rgb), 0.5) 1px,
+      transparent 1px, transparent 20px /* Adjust size */
+    );
+}
+
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Inherit global .section-header */
+
+/* Glassmorphism Content Block */
+.content {
+  max-width: 880px; /* Slightly wider */
+  margin: var(--space-xl) auto 0; /* Use variable */
+  text-align: left;
+  /* Glassmorphism Styles */
+  background-color: var(--glass-bg); /* Use variable from index.css */
+  backdrop-filter: blur(10px); /* Adjust blur amount */
+  -webkit-backdrop-filter: blur(10px);
+  border: var(--glass-border); /* Use variable */
+  border-radius: 10px; /* Slightly larger radius */
+  padding: var(--space-xl) var(--space-xxl); /* More padding inside card */
+  box-shadow: var(--glass-shadow); /* Use variable */
+}
+
+.content h3 {
+  font-family: var(--heading-font);
+  color: var(--heading-color);
+  font-size: 2.8rem; /* Slightly larger */
+  font-weight: 500; /* Maybe slightly less bold Orbitron */
+  margin-bottom: var(--space-lg); /* Use variable */
+  margin-top: var(--space-xl); /* Use variable */
+  position: relative;
+  padding-bottom: var(--space-sm); /* Use variable */
+  letter-spacing: 0.07em;
+}
+.content h3:first-of-type {
+  margin-top: 0;
+}
+
+/* Modified underline */
+.content h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 60px;
+  height: 4px; /* Thicker */
+  background: var(--gradient-border);
+  border-radius: 1px;
+}
+
+/* Styling for H4 subheadings */
+.content h4 {
+    font-family: var(--heading-font);
+    color: var(--accent-cyan); /* Use accent color */
+    font-size: 1.9rem; /* Smaller than h3 */
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-sm);
+    border-left: 3px solid var(--accent-cyan); /* Accent border */
+    padding-left: var(--space-md);
+}
+
+.content p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md); /* Use variable */
+  font-size: 1.7rem;
+  line-height: 1.8;
+  font-weight: 400; /* Ensure body font weight is normal */
+}
+
+.content ul {
+  list-style: none;
+  padding-left: 0;
+  margin: var(--space-lg) 0; /* Use variable */
+}
+
+.content li {
+  color: var(--text-secondary);
+  font-size: 1.6rem; /* Slightly smaller for list items */
+  line-height: 1.7;
+  margin-bottom: var(--space-md); /* Use variable */
+  padding-left: var(--space-lg); /* Use variable - more space for bullet */
+  position: relative;
+  font-family: var(--mono-font); /* Use Monospaced Font */
+  font-weight: 400; /* Ensure normal weight */
+}
+
+/* New angular list bullet */
+.content li::before {
+  content: '>'; /* Use character */
+  /* Or use a rotated square:
+  content: '';
+  width: 7px; height: 7px;
+  background: var(--accent-cyan);
+  transform: rotate(45deg); */
+  position: absolute;
+  left: 0;
+  top: 0.5em; /* Adjust alignment */
+  transform: translateY(-50%); /* Center vertically */
+  color: var(--accent-cyan);
+  font-weight: 600;
+  font-size: 1.8rem; /* Size of the '>' */
+  /* Remove previous background/border/shadow */
+}

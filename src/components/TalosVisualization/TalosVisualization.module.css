@@ -1,0 +1,41 @@
+/* src/components/TalosVisualization/TalosVisualization.module.css */
+
+.section {
+  padding: var(--section-padding-y, 120px) 0;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background: linear-gradient(rgba(14, 19, 26, 0.9), rgba(6, 9, 15, 0.98));
+  background-image: radial-gradient(circle at center, rgba(var(--accent-blue-rgb, 82, 155, 255), 0.08) 0%, transparent 60%),
+                    linear-gradient(rgba(14, 19, 26, 0.9), rgba(6, 9, 15, 0.98));
+}
+
+/* Βεβαιώσου ότι οι -rgb μεταβλητές είναι ορισμένες στο index.css */
+
+.container { /* Inherits global */ }
+/* Inherits global section-header */
+
+.visualizationArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.visualizationContainer {
+  max-width: 90%;
+  width: 700px;
+  height: 500px; /* <<< ΥΨΟΣ ΣΗΜΑΝΤΙΚΟ >>> */
+  margin: 0 auto;
+  position: relative;
+  display: block;
+  border-radius: 15px;
+  overflow: hidden;
+  background: rgba(0,0,0, 0.15);
+  border: 1px solid var(--glass-border);
+}
+
+.visualizationContainer > canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

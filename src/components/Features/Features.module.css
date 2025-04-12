@@ -1,0 +1,26 @@
+/* src/components/Features/Features.module.css (Use Spacing Vars) */
+.featuresSection {
+  padding: var(--section-padding-y) 0; /* Use global var */
+  position: relative;
+  overflow: hidden;
+}
+
+.featuresSection::before { /* Background grid pattern */
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(82, 155, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(82, 155, 255, 0.06) 1px, transparent 1px);
+  background-size: 50px 50px; z-index: 0; opacity: 0.4;
+  pointer-events: none;
+}
+
+.container { position: relative; z-index: 1; }
+
+/* Inherits global .section-header styles */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); /* Reduced min width */
+  gap: var(--space-xl); /* Use spacing variable */
+  margin-top: var(--space-xxl); /* Use spacing variable */
+}

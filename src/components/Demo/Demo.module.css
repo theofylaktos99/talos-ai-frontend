@@ -1,0 +1,104 @@
+/* src/components/Demo/Demo.module.css (Verify This) */
+
+.demoSection {
+  padding: var(--section-padding-y) 0;
+  background-color: var(--dark-secondary); /* Example background */
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--glass-border);
+}
+
+/* Optional background pattern */
+.demoSection::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; opacity: 0.03;
+  background-image: radial-gradient(var(--accent-blue) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  display: flex; /* Use flex for layout */
+  flex-direction: column; /* Stack stats and globe */
+  gap: var(--space-xl); /* Gap between stats and globe */
+}
+
+/* Inherits global .section-header styles */
+
+/* Stats Container - Using CSS Grid */
+.statsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
+  gap: var(--space-lg); /* Gap between stat items */
+  background-color: rgba(var(--dark-primary-rgb, 6, 9, 15), 0.5); /* Subtle background */
+  padding: var(--space-lg);
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+}
+
+.statItem {
+  text-align: center;
+  padding: var(--space-sm) 0;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.statValue {
+  display: block;
+  font-family: var(--heading-font); /* Orbitron */
+  font-size: clamp(2.4rem, 4vw, 3.2rem); /* Responsive size */
+  font-weight: 700;
+  color: var(--heading-color);
+  line-height: 1.2;
+  margin-bottom: var(--space-xs);
+  min-height: 1.2em; /* Reserve height */
+}
+
+.statLabel {
+  display: block;
+  font-family: var(--body-font); /* Rajdhani */
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Loading/Error States for Stats */
+.loadingText {
+    grid-column: 1 / -1; text-align: center; padding: var(--space-lg) 0;
+    font-family: var(--body-font); font-size: 1.6rem; color: var(--text-secondary); opacity: 0.7;
+}
+.errorBox {
+    grid-column: 1 / -1; text-align: center; padding: var(--space-md);
+    margin: 0 var(--space-md); font-family: var(--body-font); font-size: 1.5rem; font-weight: 500;
+    color: white; background-color: rgba(var(--accent-red-rgb, 247, 85, 110), 0.3);
+    border: 1px solid rgba(var(--accent-red-rgb, 247, 85, 110), 0.5); border-radius: 6px;
+}
+
+
+/* Globe Container */
+.globeVizContainer {
+  width: 100%;
+  height: 60vh; /* Responsive height */
+  min-height: 400px;
+  max-height: 550px; /* Slightly smaller max height? */
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  background-color: rgba(0,0,0, 0.2); /* Ensure some background */
+  cursor: grab;
+  position: relative; /* Needed for canvas positioning */
+  opacity: 1; /* Ensure visible */
+  visibility: visible; /* Ensure visible */
+  display: block; /* Ensure visible */
+}
+.globeVizContainer:active { cursor: grabbing; }
+
+.globeVizContainer > canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

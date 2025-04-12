@@ -1,0 +1,92 @@
+/* src/components/Terminal/Terminal.module.css */
+
+.terminal {
+  background-color: #010409; /* Πολύ σκούρο */
+  border-radius: 8px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  position: relative; /* Για scanlines */
+  border: 1px solid var(--glass-border);
+}
+
+.terminal::after { /* Optional Scanline Effect */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 4px;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: scanlines 20s linear infinite;
+  z-index: 1;
+}
+@keyframes scanlines { 0% { background-position: 0 0; } 100% { background-position: 0 100%; } }
+
+.terminalHeader {
+  background-color: var(--dark-secondary, #0e131a);
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.terminalButtons { display: flex; gap: 8px; }
+.terminalButton { width: 12px; height: 12px; border-radius: 50%; }
+.close { background-color: #ff5f56; }
+.minimize { background-color: #ffbd2e; }
+.maximize { background-color: #27c93f; }
+
+.terminalTitle {
+  font-family: monospace;
+  font-size: 1.3rem;
+  color: var(--text-secondary, #94a3b8);
+  margin-left: auto;
+}
+
+.terminalBody {
+  padding: 15px 20px;
+  height: 350px; /* Ή προσαρμόστε */
+  font-family: 'Fira Code', monospace, sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.8;
+  overflow-y: auto;
+  color: #cdd6f4; /* Lighter text */
+  position: relative;
+  z-index: 2; /* Πάνω από τα scanlines */
+}
+.terminalBody::-webkit-scrollbar { width: 8px; }
+.terminalBody::-webkit-scrollbar-track { background: var(--dark-secondary, #0e131a); border-radius: 4px;}
+.terminalBody::-webkit-scrollbar-thumb { background: var(--accent-blue, #529bff); border-radius: 4px;}
+.terminalBody::-webkit-scrollbar-thumb:hover { background: var(--accent-glow, #70b8ff); }
+
+.terminalLine {
+  margin-bottom: 6px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Styling για τους τύπους γραμμών */
+.info { color: var(--accent-blue, #529bff); }
+.warning { color: var(--accent-orange, #fca559); }
+.success { color: var(--accent-green, #4ade80); }
+.error { color: var(--accent-red, #f7556e); }
+
+.promptLine {
+  display: flex;
+  align-items: center;
+}
+.prompt {
+  color: var(--accent-cyan, #25c8e0);
+  font-weight: bold;
+  margin-right: 8px;
+}
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.8rem;
+  background-color: var(--accent-cyan, #25c8e0);
+  animation: blink 1s infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }

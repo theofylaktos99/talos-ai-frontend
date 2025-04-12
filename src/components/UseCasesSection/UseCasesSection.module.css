@@ -1,0 +1,86 @@
+/* src/components/UseCasesSection/UseCasesSection.module.css */
+
+.useCasesSection {
+  padding: var(--section-padding-y) 0;
+  background-color: var(--dark-secondary); /* Different background */
+  /* border-top: 1px solid var(--glass-border); */ /* Optional separator */
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Uses global .section-header */
+
+.grid {
+  display: grid;
+  /* Using 2 columns on medium, 3 on large screens */
+  grid-template-columns: 1fr; /* Default: 1 column */
+  gap: var(--space-xl); /* Use variable */
+  margin-top: var(--space-xxl); /* Use variable */
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  }
+  @media (min-width: 1100px) {
+    grid-template-columns: repeat(4, 1fr); /* 4 columns -> adjust if needed */
+     gap: var(--space-lg); /* Slightly smaller gap for 4 columns */
+  }
+}
+
+/* Styling for individual use case cards */
+.useCaseCard {
+  background-color: var(--card-bg, var(--dark-primary)); /* Darker card background */
+  padding: var(--space-lg);
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  /* No heavy shadow by default, maybe on hover */
+  text-align: left; /* Align text left inside card */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-fast);
+}
+
+.useCaseCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-color: var(--accent-blue);
+}
+
+
+.iconWrapper {
+  width: 50px; /* Smaller icon container */
+  height: 50px;
+  margin-bottom: var(--space-lg); /* Space below icon */
+  border-radius: 6px; /* Squarish */
+  background: linear-gradient(145deg, rgba(var(--accent-purple-rgb, 176, 144, 255), 0.1), rgba(var(--accent-blue-rgb), 0.15));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-blue); /* Icon color */
+}
+
+.iconWrapper svg {
+  width: 24px; /* Icon size */
+  height: 24px;
+}
+
+.caseTitle { /* h3 */
+  font-family: var(--heading-font);
+  color: var(--heading-color);
+  font-size: 2rem; /* Card title size */
+  font-weight: 500;
+  margin-bottom: var(--space-sm);
+  letter-spacing: 0.04em;
+}
+
+.caseDescription { /* p */
+  font-family: var(--body-font);
+  color: var(--text-secondary);
+  font-size: 1.5rem; /* Slightly smaller description */
+  line-height: 1.7;
+  margin-bottom: 0;
+  flex-grow: 1;
+}

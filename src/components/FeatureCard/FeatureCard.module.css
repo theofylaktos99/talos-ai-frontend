@@ -1,0 +1,56 @@
+/* src/components/FeatureCard/FeatureCard.module.css */
+
+.card {
+  background-color: var(--card-bg, var(--dark-secondary)); /* Χρήση μεταβλητής */
+  padding: var(--space-xl) var(--space-lg); /* Χρήση μεταβλητών */
+  border-radius: 10px;
+  border: var(--card-border); /* Χρήση μεταβλητής */
+  box-shadow: var(--card-shadow); /* Χρήση μεταβλητής */
+  text-align: center;
+  height: 100%; /* Για ομοιόμορφο ύψος καρτών σε μια σειρά */
+  display: flex; /* Flex για στοίχιση περιεχομένου */
+  flex-direction: column;
+  transition: var(--transition-fast); /* Εφέ μετάβασης */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Ανύψωση στο hover */
+  border: var(--card-border-hover); /* Χρήση μεταβλητής για hover border */
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.55); /* Πιο έντονη σκιά στο hover */
+}
+
+.iconWrapper {
+  width: 70px; /* Μέγεθος κύκλου εικονιδίου */
+  height: 70px;
+  margin: 0 auto var(--space-lg); /* Κεντράρισμα & κενό κάτω */
+  border-radius: 50%; /* Στρογγυλό */
+  background: linear-gradient(145deg, rgba(var(--accent-blue-rgb), 0.1), rgba(var(--accent-cyan-rgb), 0.1)); /* Διακριτικό background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(var(--accent-blue-rgb), 0.2); /* Περίγραμμα */
+}
+
+/* Μέγεθος/Χρώμα για τα SVG icons που περνάμε ως component */
+.iconWrapper svg {
+  width: 32px; /* Προσαρμογή μεγέθους εικονιδίου */
+  height: 32px;
+  color: var(--accent-cyan); /* Χρώμα εικονιδίου */
+}
+
+.title { /* h3 */
+  font-family: var(--heading-font); /* Χρήση heading font */
+  color: var(--heading-color);
+  font-size: 2.1rem; /* Προσαρμογή μεγέθους */
+  font-weight: 500; /* Βάρος γραμματοσειράς */
+  margin-bottom: var(--space-md); /* Χρήση μεταβλητής */
+}
+
+.description { /* p */
+  font-family: var(--body-font); /* Χρήση body font */
+  color: var(--text-secondary);
+  font-size: 1.6rem; /* Προσαρμογή μεγέθους */
+  line-height: 1.7; /* Διάστιχο */
+  margin-bottom: 0; /* Κατάργηση περιθωρίου */
+  flex-grow: 1; /* Επιτρέπει στην περιγραφή να μεγαλώσει και να σπρώξει το footer αν χρειαστεί */
+}

@@ -1,0 +1,134 @@
+/* src/components/Hero/Hero.module.css (Layout B - Side-by-Side - Reduced Sizes - STATIC) */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Reduced vertical padding */
+  padding: calc(var(--header-height, 70px) + 6rem) 0 6rem;
+  overflow: hidden;
+  z-index: var(--z-base, 1);
+  width: 100%;
+  opacity: 1; /* Ensure visible */
+}
+
+.heroLayoutContainer {
+  width: 100%;
+  display: flex; /* Default mobile: column */
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 3rem; /* Reduced gap for mobile */
+}
+
+@media (min-width: 992px) { /* Desktop: Grid */
+  .heroLayoutContainer {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); /* Text takes slightly more space */
+    align-items: center;
+    gap: 6rem; /* Reduced gap for desktop */
+    text-align: left; /* Text aligns left on desktop */
+  }
+}
+
+.heroText { /* Text column */
+  width: 100%;
+  opacity: 1; /* Ensure visible */
+   @media (min-width: 992px) {
+       grid-column: 1 / 2; /* Position in first grid column */
+       padding-right: 2rem;
+   }
+}
+
+.glitchText { /* h1 */
+  position: relative; background: none; color: var(--heading-color);
+  text-shadow: 0 0 20px var(--accent-glow); margin-bottom: 1.5rem;
+  /* Slightly reduced font size */
+  font-size: clamp(3.6rem, 6.5vw, 6.0rem);
+  letter-spacing: 0.08em;
+  opacity: 1;
+}
+
+.heroText h2 { /* subtitle */
+  max-width: 600px;
+  margin: 1.5rem auto 2.5rem;
+  /* Slightly reduced font size */
+  font-size: clamp(2.1rem, 3.3vw, 2.8rem);
+  line-height: 1.5;
+  color: var(--text-secondary); font-weight: 300; font-family: var(--body-font); text-shadow: none;
+  opacity: 1;
+  @media (min-width: 992px) { margin-left: 0; margin-right: 0; }
+}
+
+.heroText p { /* paragraph */
+  max-width: 65ch;
+  margin-left: auto; margin-right: auto; margin-bottom: 3.5rem;
+  color: var(--text-secondary);
+  /* Slightly reduced font size */
+  font-size: 1.7rem;
+  line-height: 1.7;
+  opacity: 1;
+   @media (min-width: 992px) { margin-left: 0; margin-right: 0; }
+}
+
+.highlight {
+   background: linear-gradient(90deg, var(--accent-orange), var(--accent-purple));
+   -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;
+   opacity: 1;
+}
+
+.ctaButtons {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 2rem; /* Reduced gap */
+  margin-top: 4rem; /* Reduced margin */
+  opacity: 1;
+  @media (min-width: 992px) { justify-content: flex-start; }
+}
+
+.heroBtn { opacity: 1; }
+
+.heroImage { /* Image container - RESTORED */
+  position: relative; width: 100%;
+  /* Reduced image max-width */
+  max-width: 420px;
+  margin-left: auto; margin-right: auto;
+  opacity: 1; /* Ensure visible */
+  @media (min-width: 992px) {
+      margin-top: 0;
+      grid-column: 2 / 3; /* Position in second grid column */
+      justify-self: center; /* Center within its column */
+   }
+}
+
+.guardianImg { /* Image style */
+   display: block; margin: 0 auto; max-width: 100%; height: auto;
+   filter: drop-shadow(0 0 30px rgba(112, 184, 255, 0.5)); /* Slightly reduced shadow */
+   animation: float 6s infinite cubic-bezier(0.45, 0, 0.55, 1);
+   opacity: 1; /* Ensure visible */
+}
+
+.scrollIndicator { /* Scroll indicator - using CSS animation */
+    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    z-index: var(--z-content); pointer-events: none;
+    opacity: 0; /* Start hidden for CSS animation */
+    animation: fadeInScrollIndicator 1s ease-out 1.5s forwards, bounceMouseScroll 1.8s infinite 2.5s; /* Combined animations */
+}
+
+.mouse {
+  width: 24px; height: 40px; border: 2px solid var(--text-secondary);
+  border-radius: 12px; position: relative;
+}
+
+.mouse::before {
+  content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  width: 3px; height: 6px; background-color: var(--text-secondary); border-radius: 2px;
+  animation: scrollMouseWheel 1.8s infinite ease-out;
+}
+
+/* Keyframes */
+@keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } } /* Slightly reduced float height */
+@keyframes scrollMouseWheel { 0% { opacity: 1; transform: translate(-50%, 0); } 60% { opacity: 0; transform: translate(-50%, 12px); } 100% { opacity: 0; transform: translate(-50%, 12px); } }
+@keyframes fadeInScrollIndicator { to { opacity: 0.7; } }
+@keyframes bounceMouseScroll { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } 60% { transform: translateY(-4px); } }

@@ -1,0 +1,123 @@
+/* src/components/HowItWorksSection/HowItWorksSection.module.css */
+
+.howItWorksSection {
+  padding: var(--section-padding-y) 0;
+  /* Use a gradient or different subtle background */
+  background: linear-gradient(to bottom, rgba(var(--dark-primary-rgb, 6, 9, 15), 0.95), rgba(var(--dark-secondary-rgb, 14, 19, 26), 0.95)),
+              radial-gradient(ellipse at top left, rgba(var(--accent-purple-rgb, 176, 144, 255), 0.1) 0%, transparent 50%);
+  position: relative;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Uses global .section-header */
+
+.stepsContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  justify-content: center; /* Center items when wrapped */
+  gap: var(--space-lg); /* Gap between items */
+  margin-top: var(--space-xxl);
+  position: relative; /* Needed for connector lines */
+}
+
+/* Styling for each step item */
+.stepItem {
+  background-color: rgba(var(--dark-secondary-rgb, 14, 19, 26), 0.7);
+  border: 1px solid var(--glass-border);
+  padding: var(--space-lg) var(--space-lg) var(--space-xl); /* More padding bottom */
+  border-radius: 8px;
+  text-align: left;
+  flex: 1 1 260px; /* Flex basis for responsiveness */
+  max-width: 320px; /* Max width per item */
+  position: relative; /* Needed for connector lines and number */
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-fast);
+}
+
+/* Simple hover effect */
+.stepItem:hover {
+    transform: scale(1.03);
+    border-color: var(--accent-purple);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+
+/* Connector lines (desktop only) */
+@media (min-width: 768px) {
+  .stepItem:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    /* Position line between items */
+    top: calc(25px + var(--space-sm)); /* Align with icon center roughly */
+    right: calc(-1 * var(--space-lg) / 2); /* Position in the middle of the gap */
+    transform: translateY(-50%);
+    width: calc(var(--space-lg) - var(--space-md)); /* Line width */
+    height: 2px; /* Line thickness */
+    background: linear-gradient(90deg, var(--glass-border), var(--accent-purple));
+    opacity: 0.6;
+  }
+   /* Hide line if items wrap */
+   .stepsContainer:not([data-wrapped='true']) .stepItem:last-child::after {
+      display: none;
+   }
+   /* Basic wrap detection could be added with JS if needed,
+      otherwise the line might appear incorrectly on some screen sizes if wrapping occurs */
+}
+
+
+.stepHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.stepNumber {
+  font-family: var(--heading-font);
+  font-size: 3rem; /* Large step number */
+  font-weight: 700;
+  color: var(--accent-purple);
+  opacity: 0.4;
+  line-height: 1;
+  margin-right: var(--space-sm); /* Space after number */
+}
+
+.iconWrapper {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(var(--accent-purple-rgb, 176, 144, 255), 0.1);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-purple);
+  flex-shrink: 0;
+}
+
+.iconWrapper svg {
+  width: 24px;
+  height: 24px;
+}
+
+.stepTitle { /* h3 */
+  font-family: var(--heading-font);
+  color: var(--heading-color);
+  font-size: 1.9rem; /* Slightly smaller title */
+  font-weight: 500;
+  margin-bottom: var(--space-sm);
+}
+
+.stepDescription { /* p */
+  font-family: var(--body-font);
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+  flex-grow: 1; /* Allow description to take remaining space */
+}

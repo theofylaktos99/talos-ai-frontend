@@ -1,0 +1,61 @@
+/* src/components/ThreatStats/ThreatStats.module.css */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2.5rem;
+}
+
+.statCard {
+  background: var(--glass-bg, rgba(14, 19, 26, 0.6));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  border: 1px solid var(--glass-border, rgba(82, 155, 255, 0.15));
+  transition: border-color var(--transition-medium), transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.statCard:hover {
+  border-color: rgba(112, 184, 255, 0.4);
+  transform: scale(1.04);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.statCard h4 {
+  font-size: 1.5rem;
+  color: var(--text-secondary, #94a3b8);
+  margin-bottom: 1.2rem;
+  font-family: var(--body-font);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statValue {
+  font-family: var(--heading-font);
+  font-size: clamp(2.4rem, 3.5vw, 3rem);
+  color: var(--heading-color, #f1f5f9);
+  line-height: 1.1;
+  text-shadow: 0 0 8px rgba(240, 246, 252, 0.3);
+  word-wrap: break-word;
+}
+
+/* Κλάσεις για το επίπεδο ασφαλείας */
+.CRITICAL { color: var(--accent-red, #f7556e); text-shadow: 0 0 8px var(--accent-red); }
+.HIGH { color: var(--accent-orange, #fca559); text-shadow: 0 0 8px var(--accent-orange); }
+.MEDIUM { color: var(--accent-blue, #529bff); text-shadow: 0 0 8px var(--accent-blue); }
+.LOW { color: var(--accent-green, #4ade80); text-shadow: 0 0 8px var(--accent-green); }
+.UNKNOWN { color: var(--text-secondary); text-shadow: none; }
+
+.loadingText, .errorText {
+    grid-column: 1 / -1; /* Span all columns if needed */
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.6rem;
+    color: var(--text-secondary);
+}
+.errorText {
+    color: var(--accent-red);
+}
