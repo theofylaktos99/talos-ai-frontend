@@ -1,107 +1,30 @@
-/* src/components/Preloader/Preloader.module.css (Complex Animation + Top Message - FIXED Syntax) */
+/* src/components/Preloader/Preloader.module.css (Ensuring correct background URL) */
 
-/* --- Preloader Overlay --- */
-.preloaderContainer {
-  position: fixed; z-index: 9999; inset: 0; background-color: #000814; /* Use var(--dark-primary)? */
-  display: flex; flex-direction: column; align-items: center;
-  justify-content: flex-start; /* Align welcome area to top */
-  overflow: hidden; perspective: 1000px;
-  opacity: 1; visibility: visible;
-  /* Ensure fade duration matches expectation */
-  transition: opacity 1.0s cubic-bezier(0.7, 0, 0.3, 1), visibility 1.0s cubic-bezier(0.7, 0, 0.3, 1);
-  /* Removed filter transition/property for now to simplify */
-}
-.preloaderContainer.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+/* ... (Keep ALL other styles: .preloaderContainer, .welcomeArea, .preloaderContent, city, circuit, ring, sphere, progress, etc.) ... */
+/* ... ensure the .progressBar animation duration matches App.jsx timeout ... */
 
-
-/* --- Top Welcome Area --- */
-.welcomeArea {
-  flex: 0 0 auto; width: 90%; max-width: 700px; z-index: 10; text-align: center;
-  padding-top: clamp(4vh, 8vh, 60px); padding-bottom: var(--space-lg);
-  opacity: 1;
-}
-.welcomeMessage {
-    font-family: var(--heading-font); font-size: clamp(1.8rem, 3vw, 2.2rem);
-    font-weight: 500; color: var(--accent-cyan);
-    text-shadow: 0 0 9px rgba(var(--accent-cyan-rgb), 0.7), 0 0 18px rgba(var(--accent-cyan-rgb), 0.5);
-    text-transform: uppercase; letter-spacing: 0.12em; margin: 0 auto;
-    min-height: 1.5em; padding: 0 var(--space-sm); line-height: 1.4;
-    animation: flicker 4s linear infinite alternate;
-}
-.welcomeSeparator {
-    width: 100px; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
-    margin: var(--space-md) auto; opacity: 0.5;
-}
-.taglineShieldContainer {
-    display: flex; flex-direction: column; align-items: center;
-    gap: var(--space-sm); margin-top: var(--space-sm);
-    opacity: 0; transition: opacity 0.5s ease-out;
-}
-/* Class applied via JS state in Preloader.jsx */
-.taglineShieldContainer.visible { opacity: 1; }
-.tagline {
-    font-family: var(--heading-font); font-size: clamp(1.4rem, 2vw, 1.6rem);
-    font-weight: 400; color: var(--text-secondary); text-transform: uppercase;
-    letter-spacing: 0.15em; margin: 0; padding: 0 var(--space-sm);
-    line-height: 1.4; text-align: center;
-}
-.shieldIcon {
-    color: var(--accent-green); width: 28px; height: 28px;
-    opacity: 0; transform: scale(0.5) translateY(5px);
-    transition: opacity 0.4s ease-out 0.1s, transform 0.4s cubic-bezier(0.5, 1.8, 0.5, 1) 0.1s;
-}
-.shieldIcon.visible { opacity: 1; transform: scale(1) translateY(0); }
-
-
-/* --- Main Animation Content Container --- */
-.preloaderContent {
-  flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center;
-  align-items: center; width: 100%; overflow: hidden; perspective: 1000px;
-  padding-bottom: 5vh; box-sizing: border-box; position: relative;
+/* Glitch Pseudo Elements (Check background URL) */
+.glitch::before,
+.glitch::after {
+    content: '';
+    /* Correct absolute path from public */
+    background: url('/assets/images/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%; height: 100%; position: absolute; top: 0; left: 0;
+    overflow: hidden;
+    animation: glitchSkew 3s infinite steps(2, end);
 }
 
-
-/* --- Styles for City, Circuits, Ring, Sphere, Progress Bar --- */
-/* --- These styles should be exactly as provided by the user previously --- */
-.cityscape { position: relative; width: 80%; max-width: 550px; height: 180px; margin-bottom: 15px; transform-style: preserve-3d; transform: rotateX(35deg); animation: floatCity 9s ease-in-out infinite; }
-@keyframes floatCity { 0%, 100% { transform: rotateX(35deg) translateY(0); } 50% { transform: rotateX(40deg) translateY(-12px); } }
-.fortress { position: absolute; top: 10px; left: 50%; width: 140px; height: 100px; transform: translateX(-50%); background-color: transparent; border: 2px solid var(--accent-cyan); box-shadow: 0 0 18px rgba(var(--accent-cyan-rgb), 0.7), inset 0 0 9px rgba(var(--accent-cyan-rgb), 0.5); clip-path: polygon(0% 80%, 20% 0%, 80% 0%, 100% 80%); animation: glowPulse 3.5s infinite alternate; }
-.buildings { position: absolute; bottom: 0; width: 100%; height: 100px; display: flex; justify-content: space-around; align-items: flex-end; }
-.building { width: 6.5%; background-color: transparent; border: 1px solid var(--accent-cyan); box-shadow: 0 0 12px rgba(var(--accent-cyan-rgb), 0.6), inset 0 0 6px rgba(var(--accent-cyan-rgb), 0.4); animation: buildingGlow 3.5s infinite alternate; }
-/* Building height via inline style */
-@keyframes buildingGlow { from { box-shadow: 0 0 10px rgba(var(--accent-cyan-rgb), 0.6), inset 0 0 5px rgba(var(--accent-cyan-rgb), 0.4); opacity: 0.6; } to { box-shadow: 0 0 20px rgba(var(--accent-cyan-rgb), 0.9), inset 0 0 10px rgba(var(--accent-cyan-rgb), 0.7); opacity: 1; } }
-@keyframes glowPulse { from { box-shadow: 0 0 15px rgba(var(--accent-cyan-rgb), 0.7), inset 0 0 8px rgba(var(--accent-cyan-rgb), 0.5); opacity: 0.7; } to { box-shadow: 0 0 30px rgba(var(--accent-cyan-rgb), 1.0), inset 0 0 15px rgba(var(--accent-cyan-rgb), 0.8); opacity: 1; } }
-.circuitContainer { position: relative; width: 90%; max-width: 450px; height: 70px; margin-top: -20px; margin-bottom: 15px; overflow: hidden; opacity: 0.3; border: 1px solid var(--glass-border); border-radius: 4px; }
-.circuit { position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(var(--accent-blue-rgb), 0.5) 3px, rgba(var(--accent-blue-rgb), 0.5) 4px), repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(var(--accent-cyan-rgb), 0.5) 3px, rgba(var(--accent-cyan-rgb), 0.5) 4px); background-size: 15px 15px, 15px 15px; animation: circuitFlow 5s linear infinite; }
-@keyframes circuitFlow { 0% { transform: translate(0, 0); opacity: 0.3; } 25% { opacity: 0.6; } 50% { transform: translate(7px, 7px); opacity: 0.4; } 75% { opacity: 0.6; } 100% { transform: translate(0, 0); opacity: 0.3; } }
-.loadingRing { position: relative; width: 180px; height: 180px; margin: 10px 0 15px; display: flex; justify-content: center; align-items: center; transform-style: preserve-3d; }
-.ring { position: absolute; border-radius: 50%; border: 2px solid transparent; }
-.outer { width: 180px; height: 180px; border-top-color: var(--accent-cyan); border-left-color: var(--accent-cyan); box-shadow: 0 0 15px rgba(var(--accent-cyan-rgb), 0.4); animation: spin 9s linear infinite; }
-.inner { width: 150px; height: 150px; border-bottom-color: var(--accent-blue); border-right-color: var(--accent-blue); box-shadow: 0 0 12px rgba(var(--accent-blue-rgb), 0.4); animation: spin 6s linear infinite reverse; }
-@keyframes spin { from { transform: rotateZ(0deg); } to { transform: rotateZ(360deg); } }
-.textRing { position: absolute; width: 100%; height: 100%; animation: textRing 25s linear infinite; }
-.textRing span { position: absolute; top: 0; left: 50%; transform-origin: bottom center; color: var(--accent-cyan); text-shadow: 0 0 4px rgba(var(--accent-cyan-rgb), 0.7); font-family: var(--mono-font); font-size: 0.9rem; font-weight: 600; opacity: 0.8; }
-@keyframes textRing { from { transform: rotateZ(0deg); } to { transform: rotateZ(-360deg); } }
-.pulsingSphere { position: relative; width: 45px; height: 45px; margin: 10px 0; }
-.sphereCore { position: absolute; width: 45px; height: 45px; background: radial-gradient(circle, var(--accent-cyan) 20%, var(--accent-blue) 80%); border-radius: 50%; box-shadow: 0 0 25px rgba(var(--accent-cyan-rgb), 0.8); animation: pulseCore 2.8s ease-in-out infinite; }
-.sphereRipple { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; border: 1px solid var(--accent-cyan); box-shadow: 0 0 10px rgba(var(--accent-cyan-rgb), 0.5); animation: pulseRipple 2.8s ease-out infinite; }
-.sphereRipple:nth-of-type(2) { animation-delay: 0.7s; border-color: var(--accent-blue); } /* From user JSX */
-@keyframes pulseCore { 0%, 100% { transform: scale(0.8); opacity: 0.8; } 50% { transform: scale(1); opacity: 1; } }
-@keyframes pulseRipple { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(3); opacity: 0; } }
-.loadingProgress { width: 200px; height: 4px; background: rgba(var(--accent-blue-rgb), 0.1); border-radius: 3px; margin-top: var(--space-lg); overflow: hidden; border: 1px solid var(--glass-border); }
-.progressBar { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); box-shadow: 0 0 6px rgba(var(--accent-cyan-rgb), 0.6); border-radius: 3px; animation: loadProgress 4.5s ease-out forwards; /* Match App.jsx timeout */ }
-@keyframes loadProgress { from { width: 0%; } to { width: 100%; } }
-
-/* Flicker keyframes */
-@keyframes flicker { 0%, 18%, 22%, 25%, 53%, 57%, 100% { text-shadow: 0 0 5px rgba(var(--accent-cyan-rgb), 0.4), 0 0 10px rgba(var(--accent-cyan-rgb), 0.4), 0 0 15px rgba(var(--accent-cyan-rgb), 0.4); opacity: 1; } 20%, 24%, 55% { text-shadow: none; opacity: 0.8; } }
-
-/* Responsive */
-@media (max-width: 768px) {
-  .cityscape { width: 90%; height: 150px; }
-  .loadingRing { width: 150px; height: 150px; }
-  .outer { width: 150px; height: 150px; }
-  .inner { width: 120px; height: 120px; }
-  .textRing span { font-size: 0.8rem; /* Inline style handles position */ }
-  /* Remove invalid CSS below */
+.glitch::before {
+    left: 2px; text-shadow: -1px 0 var(--accent-red);
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    animation: glitchSkew 3s infinite steps(2, end) reverse;
 }
+
+.glitch::after {
+    left: -2px; text-shadow: 1px 0 var(--accent-cyan);
+    clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+/* ... (Keep ALL other styles and keyframes) ... */

@@ -1,11 +1,19 @@
+<<<<<<< Updated upstream
 // src/components/Hero/Hero.jsx (Added Alt Text)
+=======
+// src/components/Hero/Hero.jsx (Ensuring correct image path)
+>>>>>>> Stashed changes
 import React from 'react';
 import styles from './Hero.module.css';
 
 const guardianImagePath = '/assets/images/talos-guardian.png';
 
 function Hero() {
+<<<<<<< Updated upstream
   // This is the static version with side-by-side layout
+=======
+  // Static version
+>>>>>>> Stashed changes
   return (
     <section className={styles.hero} id="home">
       <div className={`${styles.heroLayoutContainer} container`}>
@@ -20,8 +28,12 @@ function Hero() {
           <div className={styles.heroImage}>
              {/* ADDED ALT TEXT HERE */}
             <img
+<<<<<<< Updated upstream
                 src={guardianImagePath}
                 // Περιγραφικό Alt Text στα Αγγλικά (σύνηθες) ή Ελληνικά
+=======
+                src={guardianImagePath} // Uses guardianImagePath
+>>>>>>> Stashed changes
                 alt="Cybernetic guardian figure representing TALOS A.I. security"
                 className={styles.guardianImg}
             />
