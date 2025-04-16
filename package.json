@@ -3,16 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "homepage": "https://theofylaktos99.github.io/talos-ai-frontend/",
+  "type": "module",
 
- "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+        "deploy": "gh-pages -b gh-pages -d dist -f -m \"Deploy build [skip ci]\""
   },
+
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
