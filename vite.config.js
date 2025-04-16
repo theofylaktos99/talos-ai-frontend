@@ -1,15 +1,13 @@
- vite.config.js (Cleaned - Ready for Build before Deploy)
+// vite.config.js (Final for Netlify deploy & Local Dev)
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
- https://vitejs.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  Base path for GitHub Pages deployment - MUST be uncommented for the build
-  base: '/talos-ai-frontend/',  Ensure this matches your repo name
+  // base: '/talos-ai-frontend/', // 
   server: {
-     Proxy settings for LOCAL development (npm run dev)
-     They don't affect the build output
+    // Το proxy παραμένει για το local development
     proxy: {
       '/api': {
         target: 'http://localhost:8080',
