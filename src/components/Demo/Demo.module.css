@@ -1,15 +1,14 @@
-/* src/components/Demo/Demo.module.css (Verify This) */
+/* src/components/Demo/Demo.module.css (Threat Log Styles) */
 
 .demoSection {
   padding: var(--section-padding-y) 0;
-  background-color: var(--dark-secondary); /* Example background */
+  background-color: var(--dark-secondary);
   position: relative;
   overflow: hidden;
   border-top: 1px solid var(--glass-border);
 }
 
-/* Optional background pattern */
-.demoSection::before {
+.demoSection::before { /* Background pattern */
   content: ''; position: absolute; inset: 0; z-index: 0; opacity: 0.03;
   background-image: radial-gradient(var(--accent-blue) 1px, transparent 1px);
   background-size: 20px 20px;
@@ -17,88 +16,118 @@
 }
 
 .container {
-  position: relative;
-  z-index: 1;
-  display: flex; /* Use flex for layout */
-  flex-direction: column; /* Stack stats and globe */
-  gap: var(--space-xl); /* Gap between stats and globe */
+  position: relative; z-index: 1; display: flex; flex-direction: column;
+  gap: var(--space-xl);
 }
 
-/* Inherits global .section-header styles */
-
-/* Stats Container - Using CSS Grid */
+/* Styles for Stats Container (παραμένουν ίδια) */
 .statsContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
-  gap: var(--space-lg); /* Gap between stat items */
-  background-color: rgba(var(--dark-primary-rgb, 6, 9, 15), 0.5); /* Subtle background */
-  padding: var(--space-lg);
-  border-radius: 8px;
-  border: 1px solid var(--glass-border);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-lg); background-color: rgba(var(--dark-primary-rgb, 6, 9, 15), 0.5);
+  padding: var(--space-lg); border-radius: 8px; border: 1px solid var(--glass-border);
 }
+.statItem { /* ... */ } .statValue { /* ... */ } .statLabel { /* ... */ }
+.loadingText { /* ... */ } .errorBox { /* ... */ }
 
-.statItem {
-  text-align: center;
-  padding: var(--space-sm) 0;
-  min-height: 80px;
+
+/* --- Threat Log Styles --- */
+.threatLogContainer {
+  width: 100%;
+  height: 400px; /* Fixed height for the log area */
+  max-height: 60vh; /* Limit height based on viewport */
+  background-color: rgba(var(--dark-primary-rgb, 6, 9, 15), 0.85); /* Dark background */
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: column; /* Stack header and entries */
+  overflow: hidden; /* Hide inner overflow */
+  font-family: var(--mono-font); /* Monospaced font */
 }
 
-.statValue {
-  display: block;
-  font-family: var(--heading-font); /* Orbitron */
-  font-size: clamp(2.4rem, 4vw, 3.2rem); /* Responsive size */
-  font-weight: 700;
+.logHeader {
+  background-color: rgba(var(--dark-secondary-rgb, 14, 19, 26), 0.8);
+  padding: var(--space-sm) var(--space-md);
   color: var(--heading-color);
-  line-height: 1.2;
-  margin-bottom: var(--space-xs);
-  min-height: 1.2em; /* Reserve height */
-}
-
-.statLabel {
-  display: block;
-  font-family: var(--body-font); /* Rajdhani */
   font-size: 1.4rem;
-  color: var(--text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--glass-border);
+  flex-shrink: 0; /* Prevent header from shrinking */
 }
 
-/* Loading/Error States for Stats */
-.loadingText {
-    grid-column: 1 / -1; text-align: center; padding: var(--space-lg) 0;
-    font-family: var(--body-font); font-size: 1.6rem; color: var(--text-secondary); opacity: 0.7;
+.logEntriesWrapper {
+  flex-grow: 1; /* Take remaining space */
+  overflow-y: auto; /* Enable vertical scroll */
+  padding: var(--space-md);
+  /* Reverse column direction to show new entries at top easily with scroll */
+  /* display: flex; flex-direction: column-reverse; */ /* Option 1: Reverse + scroll to bottom */
+  /* Option 2: Normal direction, add new items at top in JS */
 }
-.errorBox {
-    grid-column: 1 / -1; text-align: center; padding: var(--space-md);
-    margin: 0 var(--space-md); font-family: var(--body-font); font-size: 1.5rem; font-weight: 500;
-    color: white; background-color: rgba(var(--accent-red-rgb, 247, 85, 110), 0.3);
-    border: 1px solid rgba(var(--accent-red-rgb, 247, 85, 110), 0.5); border-radius: 6px;
+
+.logEntry {
+  font-size: 1.3rem; /* Small log text */
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px dashed rgba(var(--glass-border-rgb), 0.3); /* Subtle separator */
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  gap: 0 var(--space-md); /* Horizontal gap only */
+  /* Animation for new entries */
+  animation: logFadeIn 0.5s ease-out forwards;
+}
+.logEntry:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+@keyframes logFadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 
-/* Globe Container */
-.globeVizContainer {
-  width: 100%;
-  height: 60vh; /* Responsive height */
-  min-height: 400px;
-  max-height: 550px; /* Slightly smaller max height? */
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid var(--glass-border);
-  background-color: rgba(0,0,0, 0.2); /* Ensure some background */
-  cursor: grab;
-  position: relative; /* Needed for canvas positioning */
-  opacity: 1; /* Ensure visible */
-  visibility: visible; /* Ensure visible */
-  display: block; /* Ensure visible */
+.logTimestamp {
+  color: var(--text-secondary);
+  opacity: 0.7;
+  margin-right: var(--space-sm);
+  flex-shrink: 0;
 }
-.globeVizContainer:active { cursor: grabbing; }
 
-.globeVizContainer > canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
+.logType {
+  font-weight: 700;
+  margin-right: var(--space-sm);
+  flex-shrink: 0;
 }
+
+.logMessage {
+  color: var(--text-primary);
+  flex-grow: 1; /* Allow message to take space */
+  word-break: break-word;
+}
+
+.logDetails {
+  color: var(--text-secondary);
+  opacity: 0.8;
+  font-size: 1.2rem;
+  margin-left: var(--space-sm);
+  flex-basis: 100%; /* Force details to wrap */
+  text-align: right;
+}
+
+/* Styling based on log type */
+.logEntry.alert .logType { color: var(--accent-red); }
+.logEntry.warn .logType { color: var(--accent-orange); }
+.logEntry.ok .logType { color: var(--accent-green); }
+.logEntry.info .logType { color: var(--accent-blue); }
+
+.noLogs {
+    color: var(--text-secondary);
+    opacity: 0.5;
+    text-align: center;
+    padding: var(--space-xl);
+}
+
+/* --- ΑΦΑΙΡΕΘΗΚΑΝ τα styles για .globeVizContainer --- */
