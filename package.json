@@ -2,7 +2,9 @@
   "name": "talos-ai-frontend",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "homepage": "https://theofylaktos99.github.io/talos-ai-frontend/",
+
+ "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
